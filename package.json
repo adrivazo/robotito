@@ -1,0 +1,23 @@
+{
+  "name": "robotito",
+  "version": "1.0.0",
+  "description": "IPD lil robot",
+  "main": "robotito.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "robotito"
+  },
+  "keywords": [
+    "little",
+    "slacker"
+  ],
+  "author": "ipd peeps",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.x.x",
+    "body-parser": "^1.x.x"
+  }
+}
