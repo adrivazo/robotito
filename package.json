@@ -1,14 +1,14 @@
 {
-  "name": "robotito",
+  "name": "lilrobot",
   "version": "1.0.0",
   "description": "IPD lil robot",
-  "main": "robotito.js",
+  "main": "lilrobot.js",
   "scripts": {
     "test": "test"
   },
   "repository": {
     "type": "git",
-    "url": "robotito"
+    "url": "lilrobot"
   },
   "keywords": [
     "little",
