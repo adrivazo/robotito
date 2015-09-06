@@ -16,13 +16,16 @@
    This example code is in the public domain.
  */
 
-#define publish_delay 30000 // public delay for slack
+#define publish_delay 20000 // public delay for motion
+#define publish_delay_button 1000
 unsigned int lastPublish = 0;
+unsigned int lastPublishButton = 0;
 
 const int trigPin = 2;
 const int echoPin = 4;
 const int greenPin = 5;
 const int redPin = 6;
+const int button = 3;
 
 int lastLedStatus = 0;//0 for off, 1 for on
 
@@ -49,6 +52,8 @@ void setup() {
     //http leds
     pinMode(led1, OUTPUT);
     pinMode(led2, OUTPUT);
+    
+    pinMode(button, INPUT);
     
     // We are also going to declare a Spark.function so that we can turn the LED on and off from the cloud.
    Spark.function("led",ledToggle);
@@ -96,7 +101,7 @@ void loop()
     digitalWrite(greenPin, LOW);
     digitalWrite(redPin, HIGH);
     
-    speakToSlack("hislackbot_");
+    speakToSlack("move");
     lastPublish = now;
     }
     
@@ -108,6 +113,11 @@ void loop()
   Serial.print(cm);
   Serial.print("cm");
   Serial.println();
+  
+  if(digitalRead(button)==HIGH && (now - lastPublishButton) > publish_delay_button){
+      speakToSlack("laugh");
+      lastPublishButton = now;
+  }
 
   delay(100);
 }
@@ -201,7 +211,7 @@ int ledToggle(String command) {
         }
     }
     else if (command=="speak") {
-        speakToSlack("hislackbot_");
+        speakToSlack("speak now");
         return ledToggle("toggle");
     }
     
@@ -211,6 +221,6 @@ int ledToggle(String command) {
 }
 
 int speakToSlack(String command) {
-        Spark.publish("hislackbot_", "Hello", 60, PRIVATE);
+        Spark.publish("hislackbot_", command, 60, PRIVATE);
         return 1;
 }
