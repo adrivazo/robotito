@@ -44,6 +44,7 @@ app.post('/sendmessage', function (req, res){
     });
     }
     
+    else{
     request.post({
         url: 'https://hooks.slack.com/services/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',
         //form: {payload: JSON.stringify({text: 'meow'})}
@@ -53,6 +54,7 @@ app.post('/sendmessage', function (req, res){
     }, function(err,httpResponse,body) {
         console.log("back", body);
     });
+        }
 
     res.status(200).send('Sent!');
 });
