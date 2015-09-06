@@ -23,8 +23,26 @@ app.post('/hello', hellobot);
 var request = require('request');
 app.post('/sendmessage', function (req, res){
     console.log("hello dudddeee");
-    console.log("data is " + req.data);
-    console.log("body is " + req.body.data);
+    console.log("data is " + req.body.data);
+    var spec_req = req.body.data;
+    if(spec_req == "move"){
+        request.post({
+        url: 'https://hooks.slack.com/services/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',
+        //form: {payload: JSON.stringify({text: 'meow'})}
+        //form: {payload: JSON.stringify({text: 'http://media2.giphy.com/media/XlFfSD0CiyGLC%2F200.gif'})}
+        form: {payload: JSON.stringify({text: 'no one move!'})}
+    }, function(err,httpResponse,body) {
+        console.log("back", body);
+    });
+    }
+    else if (spec_req=="laugh"){
+         request.post({
+        url: 'https://hooks.slack.com/services/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',
+        form: {payload: JSON.stringify({text: 'HA HA!'})}
+    }, function(err,httpResponse,body) {
+        console.log("back", body);
+    });
+    }
     
     request.post({
         url: 'https://hooks.slack.com/services/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',
