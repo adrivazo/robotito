@@ -174,29 +174,32 @@ int ledToggle(String command) {
             digitalWrite(led1,HIGH);
             digitalWrite(led2,HIGH);
             lastLedStatus = 1;
-            break;
+            return 1;
         case 1:
             digitalWrite(led1,LOW);
             digitalWrite(led2,LOW);
             lastLedStatus = 0;
-            break;
+            return 0;
         default:
             return -1;
             break;
         }
     }
+    else if (command=="speak") {
+        speakToSlack("Hi!");
+        return ledToggle("toggle");
+       
+    }
+    
     else {
         return -1;
     }
 }
 
 int speakToSlack(String command) {
-    
-     if (command=="speak") {
-        ledToggle("toggle");
-        Spark.publish("Hi i'm talking to you!");
+        Spark.publish("hislackbot_", "Hello", 60, PRIVATE);
         return 1;
-    }
+    
     
     
 }
