@@ -2,9 +2,6 @@
     "eventName": "hislackbot_",
     "url": "https://lilrobot.herokuapp.com/sendmessage",
     "requestType": "POST",
-    "data": {
-        "user_name": "Adriana Catalina"
-    },
     "json": {
         "gauges": [
             {
@@ -13,6 +10,9 @@
                 "source": "{{SPARK_DEVICE_ID}}"
             }
         ]
+    },
+    "form":{
+        "body":"{{SPARK_EVENT_VALUE}}"
     },
     "mydevices": true
 }
