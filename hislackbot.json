@@ -1,6 +1,6 @@
 {
     "eventName": "hislackbot_",
-    "url": "https://lilrobot.herokuapp.com/hello",
+    "url": "https://lilrobot.herokuapp.com/sendmessage",
     "requestType": "POST",
     "data": {
         "user_name": "Adriana Catalina"

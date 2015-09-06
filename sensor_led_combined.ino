@@ -54,6 +54,8 @@ void setup() {
    // For good measure, let's also make sure both LEDs are off when we start:
    digitalWrite(led1, LOW);
    digitalWrite(led2, LOW);
+   
+   Spark.function("slackOff",speakToSlack);
 }
 
 void loop()
@@ -182,9 +184,19 @@ int ledToggle(String command) {
             return -1;
             break;
         }
-    
     }
     else {
         return -1;
     }
+}
+
+int speakToSlack(String command) {
+    
+     if (command=="speak") {
+        ledToggle("toggle");
+        Spark.publish("Hi i'm talking to you!");
+        return 1;
+    }
+    
+    
 }
