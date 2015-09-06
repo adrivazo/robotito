@@ -24,7 +24,10 @@ app.post('/sendmessage', function (req, res){
     console.log("hello dudddeee");
     request.post({
         url: 'https://hooks.slack.com/services/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',
-        form: {payload: JSON.stringify({text: 'meow'})}
+        //form: {payload: JSON.stringify({text: 'meow'})}
+        //form: {payload: JSON.stringify({text: 'http://media2.giphy.com/media/XlFfSD0CiyGLC%2F200.gif'})}
+        form: {payload: JSON.stringify({command:'/giphy', text:'waves'})}
+            //text: 'http://media2.giphy.com/media/XlFfSD0CiyGLC%2F200.gif'})}
     }, function(err,httpResponse,body) {
         console.log("back", body);
     });

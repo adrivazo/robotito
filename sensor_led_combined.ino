@@ -16,6 +16,9 @@
    This example code is in the public domain.
  */
 
+#define publish_delay 30000 // public delay for slack
+unsigned int lastPublish = 0;
+
 const int trigPin = 2;
 const int echoPin = 4;
 const int greenPin = 5;
@@ -60,9 +63,12 @@ void setup() {
 
 void loop()
 {
+   unsigned long now = millis();
+  
   // establish variables for duration of the ping,
   // and the distance result in inches and centimeters:
   long duration, inches, cm;
+  
 
   // The sensor is triggered by a HIGH pulse of 10 or more microseconds.
   // Give a short LOW pulse beforehand to ensure a clean HIGH pulse:
@@ -82,9 +88,18 @@ void loop()
   // convert the time into a distance
 
   cm = microsecondsToCentimeters(duration);
-  if (cm < 10){
+  if (cm < 10 ){//if close enough and more than the desired delay has occured
+  
+    //check if it's new motion!
+    if( (now - lastPublish) > publish_delay){
+    
     digitalWrite(greenPin, LOW);
     digitalWrite(redPin, HIGH);
+    
+    speakToSlack("hislackbot_");
+    lastPublish = now;
+    }
+    
   } else {
     digitalWrite(redPin, LOW);
     digitalWrite(greenPin, HIGH);
@@ -186,9 +201,8 @@ int ledToggle(String command) {
         }
     }
     else if (command=="speak") {
-        speakToSlack("Hi!");
+        speakToSlack("hislackbot_");
         return ledToggle("toggle");
-       
     }
     
     else {
@@ -199,7 +213,4 @@ int ledToggle(String command) {
 int speakToSlack(String command) {
         Spark.publish("hislackbot_", "Hello", 60, PRIVATE);
         return 1;
-    
-    
-    
 }
