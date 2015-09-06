@@ -29,8 +29,8 @@ app.post('/sendmessage', function (req, res){
         request.post({
         url: 'https://hooks.slack.com/services/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',
         //form: {payload: JSON.stringify({text: 'meow'})}
-        //form: {payload: JSON.stringify({text: 'http://media2.giphy.com/media/XlFfSD0CiyGLC%2F200.gif'})}
-        form: {payload: JSON.stringify({text: 'no one move!'})}
+        form: {payload: JSON.stringify({text: 'http://media2.giphy.com/media/XlFfSD0CiyGLC%2F200.gif'})}
+        //form: {payload: JSON.stringify({text: 'no one move!'})}
     }, function(err,httpResponse,body) {
         console.log("back", body);
     });
@@ -38,7 +38,7 @@ app.post('/sendmessage', function (req, res){
     else if (spec_req=="laugh"){
          request.post({
         url: 'https://hooks.slack.com/services/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',
-        form: {payload: JSON.stringify({text: 'HA HA!'})}
+        form: {payload: JSON.stringify({text: 'http://i.giphy.com/ZDKZ8hiISoEy4.gif'})}
     }, function(err,httpResponse,body) {
         console.log("back", body);
     });
