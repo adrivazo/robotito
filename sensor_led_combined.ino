@@ -16,16 +16,22 @@
    This example code is in the public domain.
  */
 
-#define publish_delay 20000 // public delay for motion
-#define publish_delay_button 1000
+#define publish_delay 30000 // public delay for motion
+#define publish_delay_button 2000
 unsigned int lastPublish = 0;
 unsigned int lastPublishButton = 0;
 
 const int trigPin = 2;
 const int echoPin = 4;
-const int greenPin = 5;
-const int redPin = 6;
-const int button = 3;
+//const int greenPin = 5;
+//const int redPin = 6;
+const int button = 6;
+
+const int led1 = A0;
+const int led2 = A1;
+const int led3 = A2;
+const int led4 = A3;
+
 
 int lastLedStatus = 0;//0 for off, 1 for on
 
@@ -38,20 +44,26 @@ int lastLedStatus = 0;//0 for off, 1 for on
 // Same as in the Blink an LED example:
 // led1 is D0, led2 is D7
 
-int led1 = D0;
-int led2 = D7;
+// int led1 = D0;
+ int led7 = D7;
 
 void setup() {
   // initialize serial communication:
   Serial.begin(9600);
   
    //usr sensor status leds 
-    pinMode(greenPin, OUTPUT);
-  pinMode(redPin, OUTPUT);
+   // pinMode(greenPin, OUTPUT);
+ // pinMode(redPin, OUTPUT);
  
     //http leds
-    pinMode(led1, OUTPUT);
-    pinMode(led2, OUTPUT);
+   // pinMode(led1, OUTPUT);
+   
+   pinMode(led1, OUTPUT);
+   pinMode(led2, OUTPUT);
+   pinMode(led3, OUTPUT);
+   pinMode(led4, OUTPUT);
+
+    pinMode(led7, OUTPUT);
     
     pinMode(button, INPUT);
     
@@ -60,8 +72,8 @@ void setup() {
    // This is saying that when we ask the cloud for the function "led", it will employ the function ledToggle() from this app.
 
    // For good measure, let's also make sure both LEDs are off when we start:
-   digitalWrite(led1, LOW);
-   digitalWrite(led2, LOW);
+   //digitalWrite(led1, LOW);
+   digitalWrite(led7, LOW);
    
    Spark.function("slackOff",speakToSlack);
 }
@@ -98,16 +110,17 @@ void loop()
     //check if it's new motion!
     if( (now - lastPublish) > publish_delay){
     
-    digitalWrite(greenPin, LOW);
-    digitalWrite(redPin, HIGH);
+    // digitalWrite(greenPin, LOW);
+    // digitalWrite(redPin, HIGH);
     
     speakToSlack("move");
+    ledToggle("toggle");
     lastPublish = now;
     }
     
   } else {
-    digitalWrite(redPin, LOW);
-    digitalWrite(greenPin, HIGH);
+    // digitalWrite(redPin, LOW);
+    // digitalWrite(greenPin, HIGH);
   }
   Serial.println("V 01");
   Serial.print(cm);
@@ -182,27 +195,27 @@ int ledToggle(String command) {
     */
 
     if (command=="on") {
-        digitalWrite(led1,HIGH);
-        digitalWrite(led2,HIGH);
+        //digitalWrite(led1,HIGH);
+        digitalWrite(led7,HIGH);
         lastLedStatus = 1;
         return 1;
     }
     else if (command=="off") {
-        digitalWrite(led1,LOW);
-        digitalWrite(led2,LOW);
+        //digitalWrite(led2,LOW);
+        digitalWrite(led7,LOW);
         lastLedStatus = 0;
         return 0;
     }
     else if (command=="toggle"){
         switch(lastLedStatus){
         case 0:
-            digitalWrite(led1,HIGH);
-            digitalWrite(led2,HIGH);
+           // digitalWrite(led1,HIGH);
+            digitalWrite(led7,HIGH);
             lastLedStatus = 1;
             return 1;
         case 1:
-            digitalWrite(led1,LOW);
-            digitalWrite(led2,LOW);
+            //digitalWrite(led1,LOW);
+            digitalWrite(led7,LOW);
             lastLedStatus = 0;
             return 0;
         default:
@@ -222,5 +235,23 @@ int ledToggle(String command) {
 
 int speakToSlack(String command) {
         Spark.publish("hislackbot_", command, 60, PRIVATE);
+        circle_bl();
         return 1;
+}
+
+void circle_bl() {
+   // for (int i = 0; i < 2; i++) { 
+    digitalWrite(led1, HIGH);
+    delay(125);
+    digitalWrite(led2, HIGH);
+    digitalWrite(led1, LOW);
+    delay(125);
+    digitalWrite(led3, HIGH);
+    digitalWrite(led2, LOW);
+    delay(125);
+    digitalWrite(led4, HIGH);
+    digitalWrite(led3, LOW);
+    delay(125);
+    digitalWrite(led4, LOW);
+   // }
 }
